@@ -1,0 +1,41 @@
+# Slate Window Manager Configuration File
+config defaultToCurrentScreen true
+config nudgePercentOf screensize
+config resizePercentOf screensize
+
+# Moving Around Monitor
+alias full move screenOriginX;screenOriginY screenSizeX;screenSizeY
+alias lefthalf move screenOriginX;screenOriginY screenSizeX/2;screenSizeY
+alias righthalf move screenOriginX+screenSizeX/2;screenOriginY screenSizeX/2;screenSizeY
+alias bigcenter move screenOriginX+screenSizeX/12;screenOriginY 5*screenSizeX/6;screenSizeY
+alias mediumcenter move screenOriginX+screenSizeX/4;screenOriginY+screenSizeY/12 screenSizeX/2;5*screenSizeY/6
+alias smallcenter move screenOriginX+screenSizeX/3;screenOriginY+screenSizeY/12 screenSizeX/3;5*screenSizeY/6
+alias biglefthalf move screenOriginX;screenOriginY 8*screenSizeX/12;screenSizeY
+alias bigrighthalf move screenOriginX+4*screenSizeX/12;screenOriginY 8*screenSizeX/12;screenSizeY
+
+# Switching Application Focus
+bind j:ctrl;shift focus 'Firefox'
+bind k:ctrl;shift focus 'MacVim'
+bind l:ctrl;shift focus 'Preview'
+bind h:ctrl;shift focus 'iTerm'
+bind y:ctrl;shift focus 'Twitter'
+bind m:ctrl;shift focus 'Messages'
+bind u:ctrl;shift focus 'Rdio'
+bind i:ctrl;shift focus 'Finder'
+bind o:ctrl;shift focus 'VMware Fusion'
+bind ,:ctrl;shift focus 'Sketch'
+bind n:ctrl;shift focus 'Photoshop'
+
+# Key Bindings
+bind h:ctrl;shift;cmd	${lefthalf}
+bind l:ctrl;shift;cmd	${righthalf}
+bind k:ctrl;shift;cmd	${full}
+bind j:ctrl;shift;cmd	${bigcenter}
+bind n:ctrl;shift;cmd	${mediumcenter}
+bind m:ctrl;shift;cmd	${smallcenter}
+bind b:ctrl;shift;cmd	${biglefthalf}
+bind ,:ctrl;shift;cmd	${bigrighthalf}
+
+# One-shot Resizing
+bind g:ctrl grid
+

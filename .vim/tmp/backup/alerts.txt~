@@ -1,0 +1,14 @@
+#inline
+isc.defineClass( "Alert", "Canvas");
+
+isc.Alert.addProperties({
+
+title: "Title here...",
+body: "Body here...",
+status: "info",
+dynamicContents: true,
+
+contents:"<div class='alert alert-${ this.status }' role='alert'><strong>${ this.title }</strong>${ this.body }</div>"
+
+}); 
+#endinline;

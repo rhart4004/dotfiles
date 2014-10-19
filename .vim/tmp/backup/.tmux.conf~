@@ -1,0 +1,21 @@
+# use something that isn't as hard to type
+set -g prefix C-f
+unbind C-b
+bind C-f send-prefix
+
+# reload the config.
+bind r source-file ~/.tmux.conf \; display "Reloaded ~/.tmux.conf"
+
+# saner splitting
+bind v split-window -h -c '#{pane_current_path}'
+bind s split-window -v -c '#{pane_current_path}'
+bind S choose-session
+
+# pane movement
+bind h select-pane -L
+bind j select-pane -D
+bind k select-pane -U
+bind l select-pane -R
+
+
+

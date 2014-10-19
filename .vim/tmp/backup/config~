@@ -1,0 +1,4 @@
+Host daveRpi
+HostName ipsum.ddns.net
+Port 223
+User rhart

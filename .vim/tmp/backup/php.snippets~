@@ -1,0 +1,13 @@
+snippet html5
+<doctype html>
+endsnippet
+
+snippet boiler
+<html>
+	<head>
+		<title>$1</title>
+	</head>
+	<body>$0
+	</body>
+</html>
+endsnippet

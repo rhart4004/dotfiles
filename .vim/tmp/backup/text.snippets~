@@ -1,0 +1,8 @@
+global !p
+endglobal
+
+snippet 75wrds "Log a 750words.com sessions" b
+750words.com: ${1:750} words in ${2:20} minutes- `!p
+snip.rv = fraction(t[1], t[2])
+` wpm
+endsnippet

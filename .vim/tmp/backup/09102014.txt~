@@ -1,0 +1,71 @@
+ssh_config
+
+can create a file ~/.ssh/config and add lines to create shortcuts to typing all of the ssh details
+
+Host shortName
+HostName example.com
+Port ###
+User username
+
+this way you will be able to type 
+
+'ssh shortName' 
+
+rather than 
+
+'ssh username@example.com -p ###'
+
+which is much shorter.
+
+-------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------
+
+pentadactyl not saving quickmarks
+
+pentadactyl for some reason will not create the directories that it need automagically
+so you need to actually go and create them for yourself.
+
+To find out what directory it is storing the information, type
+
+:js alert(storage.infoPath.path) 
+
+and this will open an alert message with the path that pentadactyl needs to you to create
+
+In my case, the path was ~/.pentadactyl/info/default.
+
+So i created this path by running
+
+mkdir -p ~/.pentadactyl/info/default.
+
+Note: if you didn't know, the -p option of mkdir says "make this path exist, if something 
+doesnt exist create it, if it does, then move into it"
+
+
+-------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------
+
+iterm2 use meta key
+
+many keyboard shortcuts require the use of the meta key including tmux and irssi 
+which i just came across today.
+
+to enable the meta key in iTerm2, you must
+
+1. open iTerm2 profiles
+2. edit profiles
+3. choose keys
+4. at the bottom choose what the option keys do (if you want meta choose +ESC)
+** no idea why **
+5. then close and now it will work.
+
+if using terminal:
+
+1. open terminal settings
+2. select the settings tab and then select the keyboard tab inside 
+3. check "use option as meta key" on the bottom of keyboard tab
+4. close preferences
+
+-------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------
+
+

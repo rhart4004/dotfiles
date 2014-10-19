@@ -1,0 +1,33 @@
+.slogan {
+	font-size: 2em;
+	line-height: normal;
+}
+
+.intro {
+	position: relative;
+	font-weight: 300;
+	color: #fff;
+}
+
+h3.slogan {
+	font-weight: 100;
+}
+
+.backgroundImage {
+	background: #3498db;
+	height: 100%;
+	width: 100%;
+	position: absolute;
+	right: 0;
+	top: 0;
+	
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	background-repeat: no-repeat;
+	
+	z-index: -1;
+	opacity: .9;
+
+}

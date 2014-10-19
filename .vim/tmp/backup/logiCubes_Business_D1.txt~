@@ -1,0 +1,78 @@
+Introduction
+
+Project Description
+
+Problem Statement:
+
+Kids in middle school and high school tend to have difficulty sitting down to learn.  This is usually due to the fact that there are other fun things that they would rather be doing. The other problem is that kids choose a college career before they know anything about it.
+
+Proposed Solution:
+
+Our solution is an educational puzzle game that will facilitate the learning of Digital Logic. 
+
+Technologies Used:
+
+We are using a variety of technology in our project.  We will break this up into two sections: mechanical and electrical. 
+
+Electrical
+
+The "brain" of our device will be a PIC microcontroller.  This will allow us to do a number of things. First off it will allow us to generate the necessary logic signals for the user to interact with.  It will also allow us to have multiple puzzles loaded on the device at once.  If we need to add more puzzles to the device, the PIC will allow us to connect to a PC and load more programs via USB.  
+
+The logic chips will be used to provide the functionality in each block. These chips will give us the functionality of each digital logic element that we need including AND, OR, NOR, NOT, NAND, and buffer. 
+
+The signal to check if the puzzle is solved will be routed from the terminal block back through the logic blocks to the start block, where it will be evalutated by the PIC to see if the puzzle is solved. A multiplexer and 555 timer will be use in conjunction to send multiple signals back to the start block over one communication line.
+
+The power for our device will come from either the onboard battery or wall power. The incoming power will go through our power management chip which will help us with detecting low power, battery charging, auto shut-off as well as power spike protection. Connected right after the power management chip will be our battery. From the battery, the voltage will go through a buck/boost converter that will provide a steady 3.3V power line.
+
+The onboard LCD will be used for any communications between our device and the user. These instructions could include everything from instructions to an alert that the puzzle is complete. 
+
+The buttons will the be the way that our device collects user input. This will be necessary for choosing the puzzle and interacting with the device. 
+
+ESD protection circuitry will be used to ensure the safety of our users, especially since they are most likely going to be children.
+
+Mechanical
+
+The enclosure is hopefully going to be made of a child safe, durable plastic. The enclosure will be water resistant to avoid potential short circuits. The blocks will all have rounded corners to further ensure the safety of the user. 
+
+To help make the device more fun, different colored plastics will be used in construction.
+
+The connections between blocks will be as unexposed as possible to further prevent hazard. Each connection will be polarized, most likely by magnets, so that each block can only fit together in the correct orientation. 
+
+Project Objectives / Outcomes
+
+Project Scope
+
+Primary application 
+
+The primary application for our device will be a teaching aid for teachers and parents. By making the process of learning digital logic fun, it should be much easier to get children to sit down, use our device and learn.
+
+User Characteristics
+
+Our main market will be children from the ages of 12-18 (middle to high school). The reason we targeted this age group is becasue we want to help children get exposed to more before they are asked to choose a career. If children can be exposed to many different elements of many different career paths they will be able to make much better decsions when it comes to choosing a major in college.
+
+Potential Other Applications or Users
+
+- College Users
+- Hobbyist
+- Special Needs Education
+- Rapid Prototyping
+- Family Game / Board Game
+- Phone application
+
+Detailed Discussion
+
+Hobbyist
+
+The hobbyist market has exploded over the last couple of years. There is huge potential to move into this part of the electronics market. Our device would be valuable to a hobbyist as is for a couple of reasons. It would allow them to prototype quickly anything that had to do with digital logic. It could be a great learning tool for a hobbyist that is new to digital logic. If we modified our product we could make logiCubes even more of an asset to hobbyist. We could take all of the blocks and build the enlosures so they could be opened up and tinkered with. Hobbyist love to take stuff apart and play. If we allowed them to take our product apart and fiddle with it, who knows what great ideas would come to light. Expanding on this idea, if we create a "hobbyist" block which would have a bread board inside it would be possible for hobbyist to create their own blocks and make them do whatever they wanted. We would be changing the idea of logiCubes from a puzzle we make, to a platform for creating new things like the arduino or rasberry pi. 
+
+We could create competitions around the blocks. These could include most intricate implementation of the gates or complete the task with the least number of blocks challenges. 
+
+College Students
+
+To get out of the middle and high school market there would have to be some serious additions to the logiCubes system that is currently being designed. Many components that are used at the college level would need to be included such as flip-flops, decoders, multiplexers, and counters. If these components could be created and incoorportated into the logiCubes system the this could easily be used in an introduction to digital logic class at the college level. Some times in college classes there is too much computers simulation and not enough hands on projects. LogiCubes could provide a much needed tactile experience with digital logic to help students really understand what they are doing. 
+
+Special Needs Education
+
+
+
+

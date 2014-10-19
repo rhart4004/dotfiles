@@ -1,0 +1,296 @@
+#inline
+
+isc.defineClass( "CockpitListGrid", "ListGrid" );
+
+isc.CockpitListGrid.addProperties( {
+
+	watch: "",
+	request: "",
+	grouping: "",
+	broadcast: "",
+
+	alternateRecordStyles:false, 
+	leaveScrollbarGap: false, 
+	canGroupBy: true, 
+	canFreezeFields: true, 
+	canAddFormulaFields: true, 
+	canAddSummaryFields: true, 
+	wrapCells: true, 
+	fixedRecordHeights: false, 
+	canEditHilites: true,
+
+	initWidget: function( arguments ) {
+
+		this.Super( "initWidget", arguments );
+		cockpit.publisher.register( this );
+	},
+
+	publish: function( name, o ) {
+
+		if ( this.isVisible() == false 
+			|| this.watch != name
+			|| this.watch == "" 
+			|| this.request == ""
+			|| ! name 
+			|| ! o 
+		) return;
+
+		this.populate( o, this.request, this.grouping );
+	},
+
+	populate: function( o, request, grouping ) {
+
+		if ( ! o ) return;
+
+		grouping = grouping || "";
+
+		if ( grouping != "" )
+			this.groupBy( grouping.split( "/" ) );
+
+		var data = o.getObjects( request );
+		this.setData( data );
+	},
+
+	selectionUpdated: function(record, recordList ) {
+
+		if ( this.broadcast != "" )
+			cockpit.publisher.publish( this.broadcast, isc.CockpitObject.create( { rec: record } ) );
+	},
+
+	groupStartOpen:"none",
+	groupNodeStyle:"customGroupNode",
+	groupValueColors: groupValueColors,
+	getGroupValueColor: function getGroupValueColor( node )
+	{
+		var sColor = this.groupValueColors[ node.groupValue ];
+		if ( sColor == null )
+			sColor = this.groupTree.getLevel( node )-1 == 0 ? lightcolors.blue: lightcolors.lightblue;
+		else
+		{
+			sLightColor = lightcolors[ sColor ];
+			if ( sLightColor )
+				sColor = sLightColor;
+		}
+		return sColor;
+	},
+ 	getGroupNodeHTML: function( node ) 
+	{
+		var nTotalCount = this.groupTree.nTotalCount;
+		if ( nTotalCount == null )
+			nTotalCount = this.groupTree.getDescendantLeaves().getLength();
+
+		var sValue = node.groupValue;
+		var sCount = node.groupMembers.length;
+		var nCount = 0;
+		var nLevel = this.groupTree.getLevel( node )-1;
+		var nLevels = this.groupByField.length;
+		var sPadding = nLevel == 0 ? "" :  "&nbsp;&nbsp;&nbsp;&nbsp;";
+		var isOpen = this.groupTree.isOpen( node );
+		var sIcon = isOpen ? "<img src='Images/sectionToggleMinus.gif' />" : "<img src='Images/sectionTogglePlus.gif' />" ;
+		if ( nLevel  == 1 || nLevels == 1 )
+		{
+			nCount = node.groupMembers.length;
+			var nPercent = nCount / nTotalCount;
+			var sPercent = isc.NumberUtil.format( nPercent, "0.#%" );
+			var sWidth = isc.NumberUtil.format( .8 * nPercent, "0.#%" );
+			var sBarColor = this.getGroupValueColor( node );
+			var sBars = "<div style='float:left;width:.2in;' >&nbsp;</div>";
+			sBars += "<div title='" + nCount + " item(s) of " + nTotalCount + " total'" + " style='float:left;width:" + sWidth+ ";background-color:" + sBarColor + "' >&nbsp;</div>";
+		}
+		else
+		{
+			var sBars = "";
+			var sMainColor = this.getGroupValueColor( node );
+			var members = node.groupMembers;
+			for ( var i = 0; i < members.length; i++ )
+			{
+				var group = members[ i ];
+				sSubGroup = group.groupValue;
+				nSubCount = group.groupMembers.length;
+				nCount += nSubCount;
+
+				var nPercent = nSubCount / nTotalCount;
+				var sPercent = isc.NumberUtil.format( nPercent, "0.#%" );
+				var sWidth = isc.NumberUtil.format( .8 * nPercent, "0.#%" );
+
+				var sBarColor = this.getGroupValueColor( group );
+				var sPieceTitle = " title=' " + sPercent + " are " + sSubGroup + " (" + nSubCount + " items)' "; // not used yet
+				sBars += "<div style='float:left;border-right:0px solid " + sBarColor + "; text-align:center;width:" + sWidth + ";background-color:" + sMainColor + "' >&nbsp;</div>";
+			}
+		}
+		var sPercent = isc.NumberUtil.format( nCount / nTotalCount, "0.#%");
+		var sTitle = " " + sPercent + " (" + nCount + " of " + nTotalCount + " total)";
+		var sSuffix = "<div class='customGroupNodeSuffix' >&nbsp;" + sPercent + "</div>";
+
+		var sResponse = "<table class='customGroupNodeTable' ><tr>";
+		sResponse     += "<td class='customGroupNodeTitle' >" + sPadding + sIcon + sValue + "</td>";
+		sResponse     += "<td class='customGroupNodeGraph' title='" + sTitle + "' >" + sBars + sSuffix + "</td>";
+		sResponse     += "</tr></table>";
+
+		return sResponse;
+
+	},	 			 
+
+	getCellCSSTextOFF: function( record, rowNum, colNum ){
+
+		var f = this.getField(colNum);
+	
+		if ( f.name == "Cost Status" || f.name == "Quality Status" || f.name == "Schedule Status" )
+		{
+			var v = record[ f.name ];
+			var c = groupValueColors[ v ];
+			c = lightcolors[ c ];
+			return c != null ? "background-color:"+c : "";
+		}
+		return "";
+	},
+
+	hilites:  [ 
+		{ "backgroundColor" : "#F2DEDE",
+		    "criteria" : { "_constructor" : "AdvancedCriteria",
+		        "fieldName" : "Cost Status",
+		        "operator" : "equals",
+		        "value" : "Way Over Budget"
+		      },
+		    "cssText" : "color:#FF0000;background-color:#F2DEDE;",
+		    "fieldName" : "Cost Status",
+		    "icon" : "",
+		    "id" : 0,
+		    "textColor" : "#FF0000"
+		  },
+		  { "backgroundColor" : "#FCF8E3",
+		    "criteria" : { "_constructor" : "AdvancedCriteria",
+		        "fieldName" : "Cost Status",
+		        "operator" : "equals",
+		        "value" : "Slightly Over Budget"
+		      },
+		    "cssText" : "color:#FFCC00;background-color:#FCF8E3;",
+		    "fieldName" : "Cost Status",
+		    "icon" : "",
+		    "id" : 1,
+		    "textColor" : "#FFCC00"
+		  },
+		  { "backgroundColor" : "#D9EDF7",
+		    "criteria" : { "_constructor" : "AdvancedCriteria",
+		        "fieldName" : "Cost Status",
+		        "operator" : "equals",
+		        "value" : "Under Budget"
+		      },
+		    "cssText" : "color:#3366FF;background-color:#D9EDF7;",
+		    "fieldName" : "Cost Status",
+		    "icon" : "",
+		    "id" : 2,
+		    "textColor" : "#3366FF"
+		  },
+		  { "backgroundColor" : "#DFF0D8",
+		    "criteria" : { "_constructor" : "AdvancedCriteria",
+		        "fieldName" : "Cost Status",
+		        "operator" : "equals",
+		        "value" : "Way Under Budget"
+		      },
+		    "cssText" : "color:#339966;background-color:#DFF0D8;",
+		    "fieldName" : "Cost Status",
+		    "icon" : "",
+		    "id" : 3,
+		    "textColor" : "#339966"
+		  },
+		  { "backgroundColor" : "#F2DEDE",
+		    "criteria" : { "_constructor" : "AdvancedCriteria",
+		        "fieldName" : "Quality Status",
+		        "operator" : "equals",
+		        "value" : "Unacceptable"
+		      },
+		    "cssText" : "color:#FF0000;background-color:#F2DEDE;",
+		    "fieldName" : "Quality Status",
+		    "icon" : "",
+		    "id" : 4,
+		    "textColor" : "#FF0000"
+		  },
+		  { "backgroundColor" : "#FCF8E3",
+		    "criteria" : { "_constructor" : "AdvancedCriteria",
+		        "fieldName" : "Quality Status",
+		        "operator" : "equals",
+		        "value" : "Marginal"
+		      },
+		    "cssText" : "color:#FFCC00;background-color:#FCF8E3;",
+		    "fieldName" : "Quality Status",
+		    "icon" : "",
+		    "id" : 5,
+		    "textColor" : "#FFCC00"
+		  },
+		  { "backgroundColor" : "#D9EDF7",
+		    "criteria" : { "_constructor" : "AdvancedCriteria",
+		        "fieldName" : "Quality Status",
+		        "operator" : "equals",
+		        "value" : "Acceptable"
+		      },
+		    "cssText" : "color:#3366FF;background-color:#D9EDF7;",
+		    "fieldName" : "Quality Status",
+		    "icon" : "",
+		    "id" : 6,
+		    "textColor" : "#3366FF"
+		  },
+		  { "backgroundColor" : "#DFF0D8",
+		    "criteria" : { "_constructor" : "AdvancedCriteria",
+		        "fieldName" : "Quality Status",
+		        "operator" : "equals",
+		        "value" : "Excellent"
+		      },
+		    "cssText" : "color:#339966;background-color:#DFF0D8;",
+		    "fieldName" : "Quality Status",
+		    "icon" : "",
+		    "id" : 7,
+		    "textColor" : "#339966"
+		  },
+		  { "backgroundColor" : "#F2DEDE",
+		    "criteria" : { "_constructor" : "AdvancedCriteria",
+		        "fieldName" : "Schedule Status",
+		        "operator" : "equals",
+		        "value" : "Critical Path Delay"
+		      },
+		    "cssText" : "color:#FF0000;background-color:#F2DEDE;",
+		    "fieldName" : "Schedule Status",
+		    "icon" : "",
+		    "id" : 8,
+		    "textColor" : "#FF0000"
+		  },
+		  { "backgroundColor" : "#FCF8E3",
+		    "criteria" : { "_constructor" : "AdvancedCriteria",
+		        "fieldName" : "Schedule Status",
+		        "operator" : "equals",
+		        "value" : "Late"
+		      },
+		    "cssText" : "color:#FFCC00;background-color:#FCF8E3;",
+		    "fieldName" : "Schedule Status",
+		    "icon" : "",
+		    "id" : 9,
+		    "textColor" : "#FFCC00"
+		  },
+		  { "backgroundColor" : "#D9EDF7",
+		    "criteria" : { "_constructor" : "AdvancedCriteria",
+		        "fieldName" : "Schedule Status",
+		        "operator" : "equals",
+		        "value" : "Warning"
+		      },
+		    "cssText" : "color:#3366FF;background-color:#D9EDF7;",
+		    "fieldName" : "Schedule Status",
+		    "icon" : "",
+		    "id" : 10,
+		    "textColor" : "#3366FF"
+		  },
+		  { "backgroundColor" : "#DFF0D8",
+		    "criteria" : { "_constructor" : "AdvancedCriteria",
+		        "fieldName" : "Schedule Status",
+		        "operator" : "equals",
+		        "value" : "On Track"
+		      },
+		    "cssText" : "color:#339966;background-color:#DFF0D8;",
+		    "fieldName" : "Schedule Status",
+		    "icon" : "",
+		    "id" : 11,
+		    "textColor" : "#339966"
+		  }
+	]
+} );
+
+#endinline;

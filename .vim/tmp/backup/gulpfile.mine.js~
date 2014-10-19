@@ -1,0 +1,115 @@
+// include gulp
+var gulp = require('gulp');
+
+// include plug-ins
+var jshint = require('gulp-jshint');
+var changed = require('gulp-changed');
+var imagemin = require('gulp-imagemin');
+var minifyHTML = require('gulp-minify-html');
+var concat = require('gulp-concat');
+var stripDebug = require('gulp-strip-debug');
+var uglify = require('gulp-uglify');
+var autoprefix = require('gulp-autoprefixer');
+var minifyCSS = require('gulp-minify-css');
+var rename = require('gulp-rename');
+var sass = require('gulp-ruby-sass');
+var tinylr = require('tiny-lr')();
+var express = require('express');
+var livereload = require('connect-livereload');
+var path = require('path');
+
+gulp.task('express', function() {
+    var app = express();
+    app.use(livereload( {port: 4002}));
+    app.use(express.static(__dirname));
+    app.listen(4000);
+});
+
+
+// jshint task
+gulp.task('jshint', function() {
+    gulp.src('./src/scripts/*.js')
+        .pipe(jshint())
+        .pipe(jshint.reporter('default'));
+});
+
+// minify new images
+gulp.task('imagemin', function() {
+    var imgSrc = './src/images/**/*',
+        imgDest = './build/images';
+
+    gulp.src(imgSrc)
+        .pipe(changed(imgDest))
+        .pipe(imagemin())
+        .pipe(gulp.dest(imgDest));
+});
+
+// minify new or changed HTML pages
+gulp.task('htmlmin', function() {
+    var htmlSrc = './src/*.html',
+        htmlDest = './build/';
+
+    gulp.src(htmlSrc)
+        .pipe(changed(htmlDest))
+        .pipe(minifyHTML())
+        .pipe(gulp.dest(htmlDest));
+});
+
+// JS concat, strip debugging and minify
+gulp.task('scripts', function() {
+    gulp.src(['./src/scripts/lib/*.js','./src/scripts/*.js'])
+        .pipe(concat('script.js'))
+        .pipe(stripDebug())
+        .pipe(uglify());
+});
+
+// CSS concat, autoprefixer, compile sass, add min suffix and minify
+gulp.task('styles', function() {
+    return gulp.src(['./src/styles/reset.css','./src/styles/*.css','./src/styles/*.scss'])
+        //.pipe(sass( {style: 'expand'} ))
+        .pipe(concat('styles.css'))
+        .pipe(autoprefix('last 2 versions'))
+        //.pipe(rename( {suffix: '.min'} ))
+        .pipe(minifyCSS())
+        .pipe(gulp.dest('./build/styles/'));
+});
+
+gulp.task('livereload', function() {
+    tinylr.listen(4002);
+});
+
+function notifyLiveReload( event ) {
+    var fileName = path.relative(__dirname, event.path);
+
+    tinylr.changed({
+        body: {
+            files: [fileName]
+        }
+    });
+};
+
+gulp.task('watch', function() {
+    // watch for HTML changes
+    gulp.watch(['./src/*.html'],['htmlmin']);
+
+    // watch for JS changes
+    gulp.watch(['./src/scripts/**/*.js'], ['jshint', 'scripts']);
+
+    // watch for image changes
+    gulp.watch(['./src/images/**/*'], ['imagemin']);
+
+    // watch for CSS chnages
+    gulp.watch(['./src/styles/**/*.css'], ['styles']);
+
+    gulp.watch('./build/*.html', notifyLiveReload);
+
+});
+
+// default gulp task
+gulp.task('default', ['express','livereload', 
+    'htmlmin', 'scripts', 'styles','watch', 'imagemin'], function() {
+
+});
+
+
+    

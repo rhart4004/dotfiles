@@ -1,0 +1,17 @@
+core - styles - bootstrap
+
+used in cockpit visual menu picker
+
+verify alert working just as a label
+
+no buttons yet...
+
+some need separate class....some can be lumped into smartclient objects
+
+we want to use bootstrap for visual only...not functional
+
+all of this is in reference to the email
+
+on another note: create shortcuts for bootstrap glyphicons in vim using ultisnips (maybe for font awesome too)
+
+separate icon class for bootstrap and font awesome

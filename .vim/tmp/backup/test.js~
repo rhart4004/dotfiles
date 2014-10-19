@@ -1,0 +1,8 @@
+{
+    "name": "filter",
+    "children": [
+    {"name": "FisheyeTreeFilter", "size": 1 },
+    {"name": "GraphDistanceFilter", "size": 1 },
+    {"name": "VisibilityFilter", "size": 1 }
+    ]
+}

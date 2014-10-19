@@ -1,0 +1,9 @@
+[user]
+	name = Ryan Hart
+	email = rhart4004@gmail.com
+[core]
+	editor = /usr/bin/vim
+[merge]
+	tool = vimdiff
+[push]
+	default = current

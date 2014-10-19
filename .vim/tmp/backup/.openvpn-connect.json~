@@ -1,0 +1,16 @@
+{
+  "black_and_white_icons": false, 
+  "hide_toolbar_duration": false, 
+  "last_connect": {
+    "host": "50.195.63.26", 
+    "user": "ryan"
+  }, 
+  "preferred_hosts": {
+    "50.195.63.26": "50.195.63.26"
+  }, 
+  "recent": {
+    "50.195.63.26": "ryan"
+  }, 
+  "verbose_tooltip": false, 
+  "vpn_proto": "adaptive"
+}
