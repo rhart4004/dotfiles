@@ -1,0 +1,86 @@
+Adobe Application Manager
+Adobe Illustrator CC
+Adobe Photoshop CC
+AirParrot.app
+Alfred 2.app
+App Store.app
+AudioBookBinder.app
+Automator.app
+Calculator.app
+Calendar.app
+Chess.app
+ColorSnapper.app
+Contacts.app
+DVD Player.app
+Dashboard.app
+Dictionary.app
+Dropbox.app
+FaceTime.app
+Firefox.app
+FirefoxNightly.app
+Font Book.app
+Game Center.app
+GanttProject.app
+GoToMeeting (1350).app
+GoToMeeting (1440).app
+GoToMeeting (1669).app
+GoToMeeting (1694).app
+GoToMeeting (1767).app
+GoToMeeting (1796).app
+Google Chrome.app
+Google Drive.app
+Image Capture.app
+Install OS X Yosemite.app
+Karabiner.app
+Keyboard Maestro.app
+LaunchBar.app
+Launchpad.app
+LightTable.app
+LiveReload.app
+MacPorts
+MacVim.app
+Mail.app
+Maps.app
+Master Key.app
+Messages.app
+Microsoft Office 2011
+Microsoft Remote Desktop.app
+Microsoft Silverlight
+MindNode Pro.app
+Mission Control.app
+Notes.app
+OpenProj.app
+OpenVPN
+Photo Booth.app
+Photoshop
+Preview.app
+QuickTime Player.app
+Quicksilver.app
+Rdio.app
+Reminders.app
+Safari.app
+ScreenFlow.app
+Seil.app
+Silhouette Studio.app
+Sketch.app
+Slate.app
+StellarPhoenixMacDataRecovery.app
+Stickies.app
+System Preferences.app
+TeX
+TextEdit.app
+TextWrangler.app
+The Unarchiver.app
+Time Machine.app
+Transmission.app
+Transmit.app
+Twitter.app
+Utilities
+VLC.app
+VMware Fusion.app
+Wacom Tablet.localized
+Xcode.app
+calibre.app
+iBooks.app
+iTerm.app
+iTunes.app
